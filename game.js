@@ -27,17 +27,22 @@
 // ]
 export function bowlingScore(frames) {
   let totalScore = 0
+  let count = 0
   for (let i = 0; i < frames.length; i++) {
     const currentFrame = frames[i]
     const nextFrame = frames[i + 1]
 
     const frameScore = sumFrame(currentFrame)
-    if (isLastStrike(currentFrame)) {
+
+    if (count === frames.length - 2 && frames[frames.length - 2][0] === 10) {
+      return totalScore + 60
+    } else if (isLastStrike(currentFrame)) {
       totalScore += currentFrame[2]
     } else if (isSpare(currentFrame)) {
       totalScore += frames[i + 1][0]
     } else if (isDoubleStrike(currentFrame, nextFrame)) {
       totalScore += 10 + frames[i + 2][0]
+      count += 1
     } else if (isStrike(currentFrame)) {
       totalScore += frames[i + 1][0] + frames[i + 1][1]
     }
