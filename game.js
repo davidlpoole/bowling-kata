@@ -34,8 +34,7 @@ export function bowlingScore(frames) {
 
     const frameScore = sumFrame(currentFrame)
 
-    if (count === frames.length - 2 && frames[frames.length - 2][0] === 10) {
-      console.log(sumFrame(frames[9]))
+    if (isPerfectGame(frames, count)) {
       const lastSum = sumFrame(frames[9]) + frames[9][2]
       return totalScore + 10 + sumFrame(frames[9]) + lastSum
     } else if (isLastStrike(currentFrame)) {
@@ -56,6 +55,11 @@ export function bowlingScore(frames) {
 
 function sumFrame(frame) {
   return frame[0] + frame[1]
+}
+
+function isPerfectGame(frames, count) {
+  if (count === frames.length - 2 && frames[frames.length - 2][0] === 10)
+    return true
 }
 
 function isDoubleStrike(frame1, frame2) {
