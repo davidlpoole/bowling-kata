@@ -29,6 +29,9 @@ export function bowlingScore(frames) {
   let totalScore = 0
   for (let i = 0; i < frames.length; i++) {
     const frameScore = frames[i].reduce((sum, score) => sum + score, 0)
+    if (frameScore === 10) {
+      totalScore += frames[i + 1][0]
+    }
     totalScore += frameScore
   }
   return totalScore
