@@ -24,7 +24,7 @@ test.only('Score 64 (simple game)', () => {
   expect(actual).toBe(64)
 })
 
-test('Score 71 (with spares)', () => {
+test.only('Score 71 (with spares)', () => {
   //arrage
   const frames = [
     [6, 1],

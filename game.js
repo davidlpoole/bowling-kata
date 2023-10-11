@@ -26,8 +26,10 @@
 //   [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 10, 10]
 // ]
 export function bowlingScore(frames) {
-  return frames.reduce(
-    (total, frame) => total + frame.reduce((sum, score) => sum + score, 0),
-    0
-  )
+  let totalScore = 0
+  for (let i = 0; i < frames.length; i++) {
+    const frameScore = frames[i].reduce((sum, score) => sum + score, 0)
+    totalScore += frameScore
+  }
+  return totalScore
 }
