@@ -35,7 +35,9 @@ export function bowlingScore(frames) {
     const frameScore = sumFrame(currentFrame)
 
     if (count === frames.length - 2 && frames[frames.length - 2][0] === 10) {
-      return totalScore + 60
+      console.log(sumFrame(frames[9]))
+      const lastSum = sumFrame(frames[9]) + frames[9][2]
+      return totalScore + 10 + sumFrame(frames[9]) + lastSum
     } else if (isLastStrike(currentFrame)) {
       totalScore += currentFrame[2]
     } else if (isSpare(currentFrame)) {
