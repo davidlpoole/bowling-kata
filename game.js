@@ -25,3 +25,9 @@
 // const frames = [
 //   [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 0], [10, 10, 10]
 // ]
+export function bowlingScore(frames) {
+  return frames.reduce(
+    (total, frame) => total + frame.reduce((sum, score) => sum + score, 0),
+    0
+  )
+}
