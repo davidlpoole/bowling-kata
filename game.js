@@ -45,7 +45,11 @@ export function bowlingScore(frames) {
   return totalScore
 }
 
-let isDoubleStrike = true
+function isDoubleStrike(frame1, frame2) {
+  if (frame1[0] === 10 && frame2[0] === 10) {
+    return true
+  }
+}
 
 function isStrike(frame) {
   if (frame[0] === 10) {
@@ -56,6 +60,6 @@ function isStrike(frame) {
 function isSpare(frame) {
   const sumScore = frame[0] + frame[1]
   if (frame[0] !== 10 && sumScore === 10) {
-    return ture
+    return true
   }
 }
