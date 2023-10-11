@@ -47,7 +47,7 @@ test.only('Score 71 (with spares)', () => {
   expect(actual).toBe(71)
 })
 
-test('Score 104 (with spares and strikes):', () => {
+test.only('Score 104 (with spares and strikes):', () => {
   //arrage
   const frames = [
     [6, 4],
