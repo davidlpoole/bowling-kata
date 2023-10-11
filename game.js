@@ -28,25 +28,31 @@
 export function bowlingScore(frames) {
   let totalScore = 0
   for (let i = 0; i < frames.length; i++) {
-    const frameScore = frames[i].reduce((sum, score) => sum + score, 0)
-    if (frameScore === 10) {
-      if (frames[i][0] === 10) {
-        if (frames[i + 1][0] === 10) {
-          totalScore += 10 + frames[i + 2][0]
-        } else {
-          totalScore += frames[i + 1][0] + frames[i + 1][1]
-        }
-      } else {
-        totalScore += frames[i + 1][0]
-      }
+    const currentFrame = frames[i]
+    const nextFrame = frames[i + 1]
+
+    const frameScore = sumFrame(currentFrame)
+
+    if (isSpare(currentFrame)) {
+      totalScore += frames[i + 1][0]
+    } else if (isDoubleStrike(currentFrame, nextFrame)) {
+      totalScore += 10 + frames[i + 2][0]
+    } else if (isStrike(currentFrame)) {
+      totalScore += frames[i + 1][0] + frames[i + 1][1]
     }
+
     totalScore += frameScore
   }
   return totalScore
 }
 
+function sumFrame(frame) {
+  return frame[0] + frame[1]
+}
+
 function isDoubleStrike(frame1, frame2) {
   if (frame1[0] === 10 && frame2[0] === 10) {
+    console.log('double strike')
     return true
   }
 }
@@ -58,7 +64,7 @@ function isStrike(frame) {
 }
 
 function isSpare(frame) {
-  const sumScore = frame[0] + frame[1]
+  const sumScore = sumFrame(frame)
   if (frame[0] !== 10 && sumScore === 10) {
     return true
   }
