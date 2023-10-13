@@ -1,67 +1,36 @@
+/**
+ * Calculates the total bowling score based on the provided frames (a game).
+ *
+ * @param {number[][]} frames - The frames representing rolls in a bowling game.
+ * @returns {number} The total bowling score.
+ */
 export function bowlingScore(frames) {
-  let totalScore = 0
-  let count = 0
+  let total = 0
+
   for (let i = 0; i < frames.length; i++) {
-    const currentFrame = frames[i]
-    const nextFrame = frames[i + 1]
-
-    const frameScore = sumFrame(currentFrame)
-
-    if (isPerfectGame(frames, count)) {
-      return totalScore + 10 + sumFrame(frames[9])
-    } else if (isLastStrike(currentFrame)) {
-      totalScore += currentFrame[2]
-    } else if (isSpare(currentFrame)) {
-      totalScore += frames[i + 1][0]
-    } else if (isDoubleStrike(currentFrame, nextFrame)) {
-      totalScore += 10 + frames[i + 2][0]
-      count += 1
-    } else if (isStrike(currentFrame)) {
-      totalScore += frames[i + 1][0] + frames[i + 1][1]
-    }
-
-    totalScore += frameScore
+    const currentFrames = frames.slice(i)
+    total += scoreFrame(...currentFrames)
   }
-  return totalScore
+
+  return total
 }
 
-function isPerfectGame(frames, count) {
-  if (count === frames.length - 2 && frames[frames.length - 2][0] === 10)
-    return true
-}
+/**
+ * Calculates the score for a frame based on the given frames.
+ *
+ * @param {...number[][]} frames - The frames to calculate the score.
+ * @returns {number} The calculated score for the frame(s).
+ */
+export function scoreFrame(...frames) {
+  const [frame1, arg2, arg3] = frames
 
-function isDoubleStrike(frame1, frame2) {
-  if (frame1[0] === 10 && frame2[0] === 10) {
-    return true
-  }
-}
+  // prevent index overflow on last rounds
+  const defaultValue = [0, 0]
+  const frame2 = arg2 !== undefined ? arg2 : defaultValue
+  const frame3 = arg3 !== undefined ? arg3 : defaultValue
 
-function isStrike(frame) {
-  if (frame[0] === 10) {
-    return true
-  }
-}
-
-function isSpare(frame) {
-  const sumScore = sumFrame(frame)
-  if (frame[0] !== 10 && sumScore === 10) {
-    return true
-  }
-}
-
-function isLastStrike(frame) {
-  if (frame.length === 3) {
-    return true
-  }
-}
-
-export function sumFrame(frame) {
-  return frame.reduce((total, roll) => total + parseInt(roll), 0)
-}
-
-export function scoreFrame(frame1, frame2, frame3) {
   if (isDoubleStrike(frame1, frame2)) {
-    return sumFrame(frame1) + sumFrame(frame2) + sumFrame(frame3)
+    return sumFrame(frame1) + frame2[0] + frame2[1] + frame3[0]
   }
 
   if (isStrike(frame1)) {
@@ -71,5 +40,65 @@ export function scoreFrame(frame1, frame2, frame3) {
   if (isSpare(frame1)) {
     return sumFrame(frame1) + frame2[0]
   }
+
   return sumFrame(frame1)
 }
+
+/**
+ * Calculates the sum of the rolls in a frame
+ *
+ * @param {number[]} frame - The frame containing roll scores.
+ * @returns {number} The total sum of roll scores in the frame.
+ */
+export function sumFrame(frame) {
+  return frame.reduce((total, roll) => total + parseInt(roll), 0)
+}
+
+/**
+ * Determines if the given frame was a double strike.
+ *
+ * @param {number[]} frame1 - The current frame.
+ * @param {number[]} frame2 - The next frame.
+ * @returns {boolean} True if it's a double strike, otherwise false.
+ */
+export function isDoubleStrike(frame1, frame2) {
+  return frame1[0] === 10 && frame2[0] === 10
+}
+
+/**
+ * Determines if the given frame was a strike.
+ *
+ * @param {number[]} frame - The frame to check.
+ * @returns {boolean} True if it's a strike, otherwise false.
+ */
+export function isStrike(frame) {
+  return frame[0] === 10
+}
+
+/**
+ * Determines if the given frame was a spare.
+ *
+ * @param {number[]} frame - The frame to check.
+ * @returns {boolean} True if it's a spare, otherwise false.
+ */
+export function isSpare(frame) {
+  return frame[0] !== 10 && sumFrame(frame) === 10
+}
+
+const sampleGame = [
+  [2, 4],
+  [10, 0],
+  [7, 2],
+  [3, 6],
+  [5, 1],
+  [2, 2],
+  [6, 3],
+  [9, 0],
+  [4, 5],
+  [10, 6, 4],
+]
+
+const totalScore = bowlingScore(sampleGame)
+console.log('Sample Bowling Game:', sampleGame)
+console.log('Expected Score:', 100)
+console.log('Calculated Score:', totalScore)
