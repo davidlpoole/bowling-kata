@@ -8,8 +8,7 @@ export function bowlingScore(frames) {
     const frameScore = sumFrame(currentFrame)
 
     if (isPerfectGame(frames, count)) {
-      const lastSum = sumFrame(frames[9]) + frames[9][2]
-      return totalScore + 10 + sumFrame(frames[9]) + lastSum
+      return totalScore + 10 + sumFrame(frames[9])
     } else if (isLastStrike(currentFrame)) {
       totalScore += currentFrame[2]
     } else if (isSpare(currentFrame)) {
@@ -24,10 +23,6 @@ export function bowlingScore(frames) {
     totalScore += frameScore
   }
   return totalScore
-}
-
-function sumFrame(frame) {
-  return frame[0] + frame[1]
 }
 
 function isPerfectGame(frames, count) {
@@ -60,7 +55,15 @@ function isLastStrike(frame) {
   }
 }
 
-export function scoreFrame(frame1, frame2) {
+export function sumFrame(frame) {
+  return frame.reduce((total, roll) => total + parseInt(roll), 0)
+}
+
+export function scoreFrame(frame1, frame2, frame3) {
+  if (isDoubleStrike(frame1, frame2)) {
+    return sumFrame(frame1) + sumFrame(frame2) + sumFrame(frame3)
+  }
+
   if (isStrike(frame1)) {
     return sumFrame(frame1) + sumFrame(frame2)
   }
@@ -68,5 +71,5 @@ export function scoreFrame(frame1, frame2) {
   if (isSpare(frame1)) {
     return sumFrame(frame1) + frame2[0]
   }
-  return frame1[0] + frame1[1]
+  return sumFrame(frame1)
 }
