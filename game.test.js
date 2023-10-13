@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, test, expect } from 'vitest'
 import {
   bowlingScore,
   scoreFrame,
@@ -9,7 +9,7 @@ import {
 } from './game'
 
 describe('scoreFrame() correctly calculates', () => {
-  it('a normal frame', () => {
+  test('a normal frame', () => {
     const frame = [1, 3]
 
     const actual = scoreFrame(frame)
@@ -17,7 +17,7 @@ describe('scoreFrame() correctly calculates', () => {
     expect(actual).toBe(4)
   })
 
-  it('a spare frame', () => {
+  test('a spare frame', () => {
     const frame1 = [6, 4]
     const frame2 = [4, 4]
 
@@ -26,7 +26,7 @@ describe('scoreFrame() correctly calculates', () => {
     expect(actual).toBe(14) // 10 + next roll
   })
 
-  it('a strike frame', () => {
+  test('a strike frame', () => {
     const frame1 = [10, 0]
     const frame2 = [4, 4]
 
@@ -35,7 +35,7 @@ describe('scoreFrame() correctly calculates', () => {
     expect(actual).toBe(18) // 10 + next 2 rolls
   })
 
-  it('a double strike frame', () => {
+  test('a double strike frame', () => {
     const frame1 = [10, 0]
     const frame2 = [10, 0]
     const frame3 = [5, 4]
@@ -47,7 +47,7 @@ describe('scoreFrame() correctly calculates', () => {
 })
 
 describe('sumFrame() correctly handles', () => {
-  it('a 2 ball frame', () => {
+  test('a 2 ball frame', () => {
     const frame = [1, 2]
 
     const actual = sumFrame(frame)
@@ -55,7 +55,7 @@ describe('sumFrame() correctly handles', () => {
     expect(actual).toBe(3)
   })
 
-  it('a 3 ball frame', () => {
+  test('a 3 ball frame', () => {
     const frame = [10, 2, 3]
 
     const actual = sumFrame(frame)
@@ -65,7 +65,7 @@ describe('sumFrame() correctly handles', () => {
 })
 
 describe('boolean functions return correct value', () => {
-  it.each([
+  test.each([
     { frame1: [10, 0], frame2: [10, 0], expected: true },
     { frame1: [10, 0], frame2: [5, 5], expected: false },
   ])(
@@ -77,7 +77,7 @@ describe('boolean functions return correct value', () => {
     }
   )
 
-  it.each([
+  test.each([
     { frame1: [10, 0], expected: true },
     { frame1: [5, 5], expected: false },
   ])('isStrike($frame1) -> $expected', ({ frame1, expected }) => {
@@ -86,7 +86,7 @@ describe('boolean functions return correct value', () => {
     expect(actual).toBe(expected)
   })
 
-  it.each([
+  test.each([
     { frame1: [5, 5], expected: true },
     { frame1: [5, 3], expected: false },
   ])('isSpare($frame1) -> $expected', ({ frame1, expected }) => {
@@ -97,7 +97,7 @@ describe('boolean functions return correct value', () => {
 })
 
 describe('bowlingScore() correctly scores', () => {
-  it('a simple game', () => {
+  test('a simple game', () => {
     const frames = [
       [2, 0],
       [4, 2],
@@ -116,7 +116,7 @@ describe('bowlingScore() correctly scores', () => {
     expect(actual).toBe(64)
   })
 
-  it('a game with spares', () => {
+  test('a game with spares', () => {
     const frames = [
       [6, 1],
       [4, 0],
@@ -135,7 +135,7 @@ describe('bowlingScore() correctly scores', () => {
     expect(actual).toBe(71)
   })
 
-  it('a game with spares and strikes', () => {
+  test('a game with spares and strikes', () => {
     const frames = [
       [6, 4],
       [8, 0],
@@ -154,7 +154,7 @@ describe('bowlingScore() correctly scores', () => {
     expect(actual).toBe(104)
   })
 
-  it('a game with spares, strikes and a double strike', () => {
+  test('a game with spares, strikes and a double strike', () => {
     const frames = [
       [1, 2],
       [6, 4],
@@ -173,7 +173,7 @@ describe('bowlingScore() correctly scores', () => {
     expect(actual).toBe(119)
   })
 
-  it('a game with a strike on the last frame', () => {
+  test('a game with a strike on the last frame', () => {
     const frames = [
       [1, 2],
       [6, 4],
@@ -192,7 +192,7 @@ describe('bowlingScore() correctly scores', () => {
     expect(actual).toBe(141)
   })
 
-  it('a perfect game', () => {
+  test('a perfect game', () => {
     const frames = [
       [10, 0],
       [10, 0],
@@ -211,7 +211,7 @@ describe('bowlingScore() correctly scores', () => {
     expect(actual).toBe(300)
   })
 
-  it('a game with bonus roll with double strike', () => {
+  test('a game with bonus roll with double strike', () => {
     const frames = [
       [10, 0], // Strike
       [7, 3], // Spare
@@ -230,7 +230,7 @@ describe('bowlingScore() correctly scores', () => {
     expect(actual).toBe(178)
   })
 
-  it('an almost perfect game with only one final strike', () => {
+  test('an almost perfect game with only one final strike', () => {
     const frames = [
       [10, 0],
       [10, 0],
