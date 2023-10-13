@@ -61,6 +61,10 @@ function isLastStrike(frame) {
 }
 
 export function scoreFrame(frame1, frame2) {
+  if (isStrike(frame1)) {
+    return sumFrame(frame1) + sumFrame(frame2)
+  }
+
   if (isSpare(frame1)) {
     return sumFrame(frame1) + frame2[0]
   }

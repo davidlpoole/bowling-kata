@@ -18,6 +18,15 @@ test('ScoreFrame scores a spare frame', () => {
   expect(actual).toBe(14) // 10 + next roll
 })
 
+test('ScoreFrame scores a strike frame', () => {
+  const frame1 = [10, 0]
+  const frame2 = [4, 4]
+
+  const actual = scoreFrame(frame1, frame2)
+
+  expect(actual).toBe(18) // 10 + next 2 rolls
+})
+
 test('Score 64 (simple game)', () => {
   const frames = [
     [2, 0],
