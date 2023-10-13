@@ -1,8 +1,15 @@
 import { test, expect } from 'vitest'
-import { bowlingScore } from './game'
+import { bowlingScore, scoreFrame } from './game'
+
+test('ScoreFrame scores a normal frame', () => {
+  const frame = [1, 3]
+
+  const actual = scoreFrame(frame)
+
+  expect(actual).toBe(4)
+})
 
 test('Score 64 (simple game)', () => {
-  //arrage
   const frames = [
     [2, 0],
     [4, 2],
@@ -16,16 +23,12 @@ test('Score 64 (simple game)', () => {
     [8, 1],
   ]
 
-  //act
   const actual = bowlingScore(frames)
-
-  //assert
 
   expect(actual).toBe(64)
 })
 
 test('Score 71 (with spares)', () => {
-  //arrage
   const frames = [
     [6, 1],
     [4, 0],
@@ -39,16 +42,12 @@ test('Score 71 (with spares)', () => {
     [7, 2],
   ]
 
-  //act
   const actual = bowlingScore(frames)
-
-  //assert
 
   expect(actual).toBe(71)
 })
 
 test('Score 104 (with spares and strikes):', () => {
-  //arrage
   const frames = [
     [6, 4],
     [8, 0],
@@ -61,18 +60,13 @@ test('Score 104 (with spares and strikes):', () => {
     [2, 6],
     [4, 4],
   ]
-  // ]
 
-  //act
   const actual = bowlingScore(frames)
-
-  //assert
 
   expect(actual).toBe(104)
 })
 
 test('Score 119 (with spares, strikes and a double strike):', () => {
-  //arrage
   const frames = [
     [1, 2],
     [6, 4],
@@ -85,18 +79,13 @@ test('Score 119 (with spares, strikes and a double strike):', () => {
     [7, 0],
     [4, 4],
   ]
-  // ]
 
-  //act
   const actual = bowlingScore(frames)
-
-  //assert
 
   expect(actual).toBe(119)
 })
 
 test('Score 141 (includes a strike on the last frame):', () => {
-  //arrage
   const frames = [
     [1, 2],
     [6, 4],
@@ -110,16 +99,12 @@ test('Score 141 (includes a strike on the last frame):', () => {
     [10, 10, 10],
   ]
 
-  //act
   const actual = bowlingScore(frames)
-
-  //assert
 
   expect(actual).toBe(141)
 })
 
 test('Score 300 (perfect game)', () => {
-  //arrage
   const frames = [
     [10, 0],
     [10, 0],
@@ -133,10 +118,7 @@ test('Score 300 (perfect game)', () => {
     [10, 10, 10],
   ]
 
-  //act
   const actual = bowlingScore(frames)
-
-  //assert
 
   expect(actual).toBe(300)
 })
@@ -155,16 +137,12 @@ test('A game with bonus but not perfect game (Score 178)', () => {
     [10, 10, 7], // Strike (Double) with bonus roll
   ]
 
-  //act
   const actual = bowlingScore(frames)
-
-  //assert
 
   expect(actual).toBe(178)
 })
 
 test('Score 283', () => {
-  //arrage
   const frames = [
     [10, 0],
     [10, 0],
@@ -178,10 +156,7 @@ test('Score 283', () => {
     [10, 3, 7],
   ]
 
-  //act
   const actual = bowlingScore(frames)
-
-  //assert
 
   expect(actual).toBe(283)
 })
